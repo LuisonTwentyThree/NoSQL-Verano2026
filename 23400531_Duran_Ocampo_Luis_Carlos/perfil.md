@@ -19,3 +19,7 @@
 ## 📫 Cómo contactarme
 - Correo: lucaduranoc@ittepic.edu.mx
 - GitHub: [@LuisonTwentyThree](https://github.com/LuisonTwentyThree)
+
+## Pelicula recomendada
+- Pacific Rim
+- Bastardos sin Gloria
