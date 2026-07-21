@@ -1,10 +1,10 @@
 
-const API_URL = "https://netfli-two.vercel.app/";
+const API_URL = "https://netfli-two.vercel.app";
 
 // Obtener películas
 async function obtenerPeliculas() {
 
-    const respuesta = await fetch(`${API_URL}/peliculas`);
+    const respuesta = await fetch(`${API_URL}/apibaseNetflix/peliculas`);
 
     if (!respuesta.ok) {
         throw new Error("Error al consultar las películas");
@@ -17,7 +17,7 @@ async function obtenerPeliculas() {
 // Agregar película
 async function agregarPelicula(pelicula) {
 
-    const respuesta = await fetch(`${API_URL}/peliculas`, {
+    const respuesta = await fetch(`${API_URL}/apibaseNetflix/peliculas`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
