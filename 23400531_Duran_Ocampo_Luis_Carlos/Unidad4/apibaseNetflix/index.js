@@ -54,7 +54,7 @@ app.listen(PORT, () => {
 
 
 app.get('/', (req, res) => {
-    res.send('¡Hola Mundo!');
+    res.send('API de películas y series');
 });
 
 
