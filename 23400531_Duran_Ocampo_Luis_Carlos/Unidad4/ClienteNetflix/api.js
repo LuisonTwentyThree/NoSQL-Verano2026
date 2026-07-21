@@ -1,5 +1,5 @@
 
-const API_URL = "https://api-netflix-vvvc-orp.vercel.app";
+const API_URL = "https://apinetflix-nc8fp0mw1-vvvc-orp.vercel.app";
 
 // Obtener películas
 async function obtenerPeliculas() {
