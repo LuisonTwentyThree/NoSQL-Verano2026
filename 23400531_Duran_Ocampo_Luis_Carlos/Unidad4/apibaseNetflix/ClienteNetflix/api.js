@@ -1,5 +1,5 @@
 
-const API_URL = "https://netflix-roan-two.vercel.app/apibaseNetflix";
+const API_URL = "https://apinetflix-psi.vercel.app";
 
 // Obtener películas
 async function obtenerPeliculas() {
