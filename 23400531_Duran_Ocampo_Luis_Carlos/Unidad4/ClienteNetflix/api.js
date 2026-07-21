@@ -1,5 +1,5 @@
 
-const API_URL = "apinetflix-psi.vercel.app";
+const API_URL = "api-netflix-tau.vercel.app";
 
 // Obtener películas
 async function obtenerPeliculas() {
