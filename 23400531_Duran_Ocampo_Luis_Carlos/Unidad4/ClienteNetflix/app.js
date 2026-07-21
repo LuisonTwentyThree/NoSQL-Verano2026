@@ -1,34 +1,68 @@
 
-const API_URL = "https://apinetflix-nc8fp0mw1-vvvc-orp.vercel.app/";
+const formulario = document.getElementById("formulario");
+const titulo = document.getElementById("titulo");
+const genero = document.getElementById("genero");
+const año = document.getElementById("año");
+const duracion = document.getElementById("duracion");
+const idioma = document.getElementById("idioma");
+const calificacion = document.getElementById("calificacion");
 
-// Obtener películas
-async function obtenerPeliculas() {
+const btnConsultar = document.getElementById("btnConsultar");
+const listaPeliculas = document.getElementById("listaPeliculas");
 
-    const respuesta = await fetch(`${API_URL}/peliculas`);
+// Guardar película
+formulario.addEventListener("submit", async (e) => {
 
-    if (!respuesta.ok) {
-        throw new Error("Error al consultar las películas");
+    e.preventDefault();
+
+    const pelicula = {
+        titulo: titulo.value,
+        genero: genero.value,
+        año: Number(año.value),
+        duracion: Number(duracion.value),
+        idioma: idioma.value,
+        calificacion: Number(calificacion.value)
+    };
+
+    try {
+
+        const respuesta = await agregarPelicula(pelicula);
+
+        alert(respuesta.mensaje);
+
+        formulario.reset();
+
+    } catch (error) {
+
+        alert(error.message);
+
     }
 
-    return await respuesta.json();
+});
 
-}
+// Consultar películas
+btnConsultar.addEventListener("click", async () => {
 
-// Agregar película
-async function agregarPelicula(pelicula) {
+    try {
 
-    const respuesta = await fetch(`${API_URL}/peliculas`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(pelicula)
-    });
+        const peliculas = await obtenerPeliculas();
 
-    if (!respuesta.ok) {
-        throw new Error("Error al guardar la película");
+        listaPeliculas.innerHTML = "";
+
+        peliculas.forEach((pelicula) => {
+
+            const li = document.createElement("li");
+
+            li.textContent = pelicula.titulo;
+
+            listaPeliculas.appendChild(li);
+
+        });
+
+    } catch (error) {
+
+        alert(error.message);
+
     }
 
-    return await respuesta.json();
-
-}
+});
