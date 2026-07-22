@@ -1,5 +1,5 @@
-
 const formulario = document.getElementById("formulario");
+const numeroControl = document.getElementById("numeroControl");
 const titulo = document.getElementById("titulo");
 const genero = document.getElementById("genero");
 const año = document.getElementById("año");
@@ -16,6 +16,7 @@ formulario.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const pelicula = {
+        nc: numeroControl.value,
         titulo: titulo.value,
         genero: genero.value,
         año: Number(año.value),
@@ -53,7 +54,7 @@ btnConsultar.addEventListener("click", async () => {
 
             const li = document.createElement("li");
 
-            li.textContent = pelicula.titulo;
+            li.textContent = `${pelicula.titulo} (${pelicula.año ?? "s/año"}) — NC: ${pelicula.nc ?? "s/n"}`;
 
             listaPeliculas.appendChild(li);
 
