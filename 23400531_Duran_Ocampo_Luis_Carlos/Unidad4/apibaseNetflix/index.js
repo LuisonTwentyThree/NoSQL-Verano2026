@@ -8,11 +8,20 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-mongoose.connect("mongodb+srv://grupo:grupo@servidorprueba.ygegryf.mongodb.net/netflix").then(() => {
-    console.log("Conectado a la base de datos");
-}).catch((err) => {
-    console.log("Error al conectar a la base de datos", err);
-});
+
+async function iniciarServidor(){
+    try{
+        await mongoose.connect("mongodb+srv://grupo:grupo@servidorprueba.ygegryf.mongodb.net/netflix");
+        console.log("Conectado a la base de datos");
+
+        app.listen(PORT,() =>{
+            console.log(`Servidor escuchando en http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Error al conectar a la base de datos");
+        console.error(error.message);
+    }
+}
 
 
 const serieSchema = new mongoose.Schema({
