@@ -210,8 +210,8 @@ app.get("/peliculas/:id", async (req, res) => {
 
 app.post("/peliculas", async (req, res) => {
     try {
-        const { titulo, genero, año, duracion, idioma, calificacion } = req.body;
-        if(!titulo || !genero || !año || !duracion || !idioma || !calificacion){
+        const { titulo, genero, año, duracion, idioma, calificacion, nc } = req.body;
+        if(!titulo || !genero || !año || !duracion || !idioma || !calificacion || !nc){
             return res.status(400).json({
                 mensaje: "Faltan datos de la pelicula"
             });
@@ -232,7 +232,7 @@ app.post("/peliculas", async (req, res) => {
             error: error
         });
     }
-}); 
+});
 
 
 app.put("/peliculas/:id", async (req, res) => {
