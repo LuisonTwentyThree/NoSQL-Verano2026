@@ -1,29 +1,21 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 const PORT = 3000;
-const cors = require("cors");
-app.use(cors());
+
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
+mongoose.connect("mongodb+srv://grupo:grupo@servidorprueba.ygegryf.mongodb.net/netflix").then(() => {
+    console.log("Conectado a la base de datos");
+}).catch((err) => {
+    console.log("Error al conectar a la base de datos", err);
+});
 
-async function iniciarServidor(){
-    try{
-        await mongoose.connect("mongodb+srv://grupo:grupo@servidorprueba.ygegryf.mongodb.net/netflix");
-        console.log("Conectado a la base de datos");
-
-        app.listen(PORT,() =>{
-            console.log(`Servidor escuchando en http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error("Error al conectar a la base de datos");
-        console.error(error.message);
-    }
-}
-
-
+// Definición del esquema de la colección "series"
 const serieSchema = new mongoose.Schema({
     titulo: {type: String, required: true, trim: true},
     genero: {type: String, required: true, trim: true},
@@ -41,6 +33,7 @@ const serieSchema = new mongoose.Schema({
 
 const serie = mongoose.model("Serie", serieSchema, "series");
 
+// Definición del esquema de la colección "peliculas"
 const peliculaSchema = new mongoose.Schema({
     titulo: {type: String, required: true, trim: true},
     genero: {type: String, required: true, trim: true},
@@ -57,18 +50,18 @@ const peliculaSchema = new mongoose.Schema({
 
 const pelicula = mongoose.model("Pelicula", peliculaSchema, "peliculas");
 
-
+// Mensaje de iniciación del servidor
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
 
-
+// Ruta principal del servidor
 app.get('/', (req, res) => {
-    res.send('API de películas y series');
+    res.send('API Netflix. Peliculas y series.');
 });
 
-
-
+// ---------------------- RUTAS PARA LA COLECCIÓN SERIES ----------------------
+// Obtener todas las series
 app.get("/series", async (req, res) => {
     try{
         const series = await serie.find();
@@ -81,6 +74,7 @@ app.get("/series", async (req, res) => {
     }
 });
 
+//Obtener una serie por su ID
 app.get("/series/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -99,6 +93,7 @@ app.get("/series/:id", async (req, res) => {
     }
 });
 
+// Crear una nueva serie
 app.post("/series", async (req, res) => {
     try {
         const { titulo, genero, año, temporadas, episodios, idioma, calificacion, nc } = req.body;
@@ -125,7 +120,7 @@ app.post("/series", async (req, res) => {
     }
 });
 
-
+// Actualizar una serie existente
 app.put("/series/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -151,7 +146,7 @@ app.put("/series/:id", async (req, res) => {
     }
 });
 
-
+// Eliminar una serie existente
 app.delete("/series/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -175,7 +170,7 @@ app.delete("/series/:id", async (req, res) => {
     }
 });
 
-
+// ---------------------- RUTAS PARA LA COLECCIÓN PELICULAS ----------------------
 app.get("/peliculas", async (req, res) => {
     try{
         const peliculas = await pelicula.find();
@@ -188,7 +183,7 @@ app.get("/peliculas", async (req, res) => {
     }
 });
 
-
+//Obtener una pelicula por su ID
 app.get("/peliculas/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -207,7 +202,7 @@ app.get("/peliculas/:id", async (req, res) => {
     }
 });
 
-
+// Crear una nueva pelicula
 app.post("/peliculas", async (req, res) => {
     try {
         const { titulo, genero, año, duracion, idioma, calificacion, nc } = req.body;
@@ -232,9 +227,9 @@ app.post("/peliculas", async (req, res) => {
             error: error
         });
     }
-});
+}); 
 
-
+// Actualizar una pelicula existente
 app.put("/peliculas/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -260,7 +255,7 @@ app.put("/peliculas/:id", async (req, res) => {
     }
 });
 
-
+// Eliminar una pelicula existente
 app.delete("/peliculas/:id", async (req, res) => {
     try {
         const id = req.params.id;
